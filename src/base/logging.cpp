@@ -4,7 +4,8 @@
 namespace Ramulator {
 
 Logger_t Logging::create_logger(std::string name, std::string pattern) {
-  auto logger = spdlog::stdout_color_st("Ramulator::" + name);
+  static std::unordered_map<std::string,int> logger_cnt;
+  auto logger = spdlog::stdout_color_st("Ramulator::" + name + "_" + std::to_string(logger_cnt[name]++));
 
   if (!logger) {
     throw InitializationError("Error creating logger {}!", name);
